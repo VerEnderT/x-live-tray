@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=X-Live-Tray Autostart
+Exec=x-live-tray
+Icon=/usr/share/pixmaps/x-live-tray.png
+Terminal=false

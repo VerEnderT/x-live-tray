@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=0.0.1
+Type=Application
+Name=X-Live-Tray 
+Exec=x-live-tray
+Icon=x-live-tray
+Categories=Utility;
+Keywords=tray;x-live;
+StartupNotify=true
+X-GNOME-UsesNotifications=true
+GenericName=Traymenü für x-live-apps
