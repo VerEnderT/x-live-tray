@@ -1,4 +1,4 @@
 #!/bin/bash
 
-python3 /usr/share/x-live/apps-updates/update.py
+python3 /usr/share/x-live/apps-update/updates.py
 
