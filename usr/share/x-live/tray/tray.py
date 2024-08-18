@@ -4,11 +4,13 @@ import sys
 import xupdates
 import subprocess
 import os
+import urllib.request
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction, QMessageBox, QLabel
 from PyQt5.QtGui import QIcon
 
 # Pfad zum gewünschten Arbeitsverzeichnis # Das Arbeitsverzeichnis festlegen
 arbeitsverzeichnis = os.path.expanduser('/usr/share/x-live/tray')
+arbeitsverzeichnis = os.path.expanduser('/home/verendert/Schreibtisch/x-live-debs/tray/usr/share/x-live/tray/')
 
 os.chdir(arbeitsverzeichnis)
 
@@ -45,30 +47,30 @@ class SystemTrayApp:
 
         self.settings_action = QAction("Einstellungen")
         self.settings_action.triggered.connect(lambda: subprocess.Popen(self.settingscommand))
-        self.settings_action.setIcon(QIcon.fromTheme(str(self.settingscommand.split("/")[-1])))
+        self.settings_action.setIcon(QIcon("./icons/settings.png"))
         self.menu.addAction(self.settings_action)
 
         self.tm_action = QAction("Taskmanager")
         self.tm_action.triggered.connect(lambda: subprocess.Popen(self.tmcommand))
-        self.tm_action.setIcon(QIcon.fromTheme(str(self.tmcommand.split("/")[-1])))
+        self.tm_action.setIcon(QIcon("./icons/taskmanager.png"))
         self.menu.addAction(self.tm_action)
 
 
         self.term_action = QAction("Terminal")
         self.term_action.triggered.connect(lambda: subprocess.Popen(self.termcommand))
-        self.term_action.setIcon(QIcon.fromTheme(str(self.termcommand.split("/")[-1])))
+        self.term_action.setIcon(QIcon("./icons/terminal.png"))
         self.menu.addAction(self.term_action)
 
         
         if self.check_cmd("ufw")!="":
             self.ufw_action = QAction("Firewall")
             self.ufw_action.triggered.connect(lambda: subprocess.Popen("gufw"))
-            self.ufw_action.setIcon(QIcon.fromTheme('gufw'))
+            self.ufw_action.setIcon(QIcon("./icons/firewall.png"))
             self.menu.addAction(self.ufw_action)
 
         self.update_action = QAction("System aktualisieren")
         self.update_action.triggered.connect(lambda: subprocess.Popen(self.updatecommand))
-        self.update_action.setIcon(QIcon.fromTheme(str(self.updatecommand.split("/")[-1])))
+        self.update_action.setIcon(QIcon("./icons/update.png"))
         self.menu.addAction(self.update_action)
 
         self.menu.addSeparator()
@@ -79,7 +81,7 @@ class SystemTrayApp:
         if self.check_cmd("x-live-hardwareinfo")!="":
             self.hwi_action = QAction("Hardwareinformationen")
             self.hwi_action.triggered.connect(lambda: subprocess.Popen("x-live-hardwareinfo"))
-            self.hwi_action.setIcon(QIcon.fromTheme('hardware'))
+            self.hwi_action.setIcon(QIcon('./icons/hardware'))
             self.menu.addAction(self.hwi_action)
 
         if self.check_cmd("x-live-driver")!="":
@@ -176,8 +178,23 @@ class SystemTrayApp:
 
     def update_check(self):
         author = "verendert"
-        repos = ["x-live-hardwareinfo", "x-live-easyeggs", "x-live-radio", "x-live-webai"]
+        repos = ["x-live-cp","x-live-tray","x-mint-settings","x-live-hardwareinfo", "x-live-easyeggs", "x-live-radio", "x-live-webai"]
         update_list = []
+
+        try:
+            url = "https://raw.githubusercontent.com/VerEnderT/x-live-tray/main/x-live-apps"
+            with urllib.request.urlopen(url) as file:
+                # Datei zeilenweise lesen
+                lines = file.read().decode('utf-8').splitlines()
+
+            if lines:
+                repo = lines
+                print(repo)
+        except Exception as e:
+            fehler = str(e).split(":")[-1]
+            print(f"Fehler: {fehler}")
+
+
 
         for package in repos:
             try:
@@ -193,13 +210,15 @@ class SystemTrayApp:
 
         if update_list != []:
             #pkgshort = package.split("-")[2]
-            self.x_live_update = QAction(f"Updates verfügbar !")
-            self.x_live_update.setIcon(QIcon.fromTheme('update'))
+            mehrzahl=""
+            if len(update_list)>=2: mehrzahl="s"
+            self.x_live_update = QAction(f"{len(update_list)} Update{mehrzahl} verfügbar !")
+            self.x_live_update.setIcon(QIcon('./icons/update'))
             list_tt = "\n".join(update_list)
             print(f"updates: {list_tt}")
             #self.x_live_update.setToolTip("updates: {list_tt}")
             self.x_live_update.setStatusTip(f"Updates verfügbar für: {list_tt}")
-            self.x_live_update.triggered.connect(lambda: QMessageBox.information(None, "Verfügbare Updates", f"Updates verfügbar für:\n{list_tt}"))
+            self.x_live_update.triggered.connect(lambda: subprocess.Popen("x-live-apps-update"))
 
             self.menu.addAction(self.x_live_update)
 
