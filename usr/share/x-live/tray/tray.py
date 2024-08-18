@@ -10,7 +10,6 @@ from PyQt5.QtGui import QIcon
 
 # Pfad zum gewünschten Arbeitsverzeichnis # Das Arbeitsverzeichnis festlegen
 arbeitsverzeichnis = os.path.expanduser('/usr/share/x-live/tray')
-arbeitsverzeichnis = os.path.expanduser('/home/verendert/Schreibtisch/x-live-debs/tray/usr/share/x-live/tray/')
 
 os.chdir(arbeitsverzeichnis)
 
