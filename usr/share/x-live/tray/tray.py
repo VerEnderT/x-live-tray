@@ -25,7 +25,7 @@ class SystemTrayApp:
         self.tray_icon.setToolTip("X-Live Tools")
 
         # mögliche befehle
-        self.settings_cmds =  self.check_cmds(["xfce4-settings-manager","lxde-control-center","gnome-control-center","systemsettings"]).split("\n")
+        self.settings_cmds =  self.check_cmds(["x-mint-settings","xfce4-settings-manager","lxde-control-center","gnome-control-center","systemsettings"]).split("\n")
         self.term_cmds = self.check_cmds(["gnome-terminal","konsole","xfce4-terminal","lxterminal"]).split("\n")
         self.taskm_cmds = self.check_cmds(["gnome-system-monitor","ksysguard","xfce4-taskmanager","lxtask","stacer"]).split("\n")
         self.update_cmds = self.check_cmds(["x-live-update","update-manager","mintupdate","muon-updater","discover","gnome-software","aptitude"]).split("\n")
