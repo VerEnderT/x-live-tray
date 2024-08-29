@@ -20,7 +20,7 @@ class SystemTrayApp:
         # mögliche befehle
         self.settings_cmds =  self.check_cmds(["xfce4-settings-manager","lxde-control-center","gnome-control-center","systemsettings"]).split("\n")
         self.term_cmds = self.check_cmds(["gnome-terminal","konsole","xfce4-terminal","lxterminal"]).split("\n")
-        self.taskm_cmds = self.check_cmds(["gnome-system-monitor","ksysguard","xfce4-taskmanager","lxtask","stacer"]).split("\n")
+        self.taskm_cmds = self.check_cmds(["x-live-taskmanager","gnome-system-monitor","ksysguard","xfce4-taskmanager","lxtask","stacer"]).split("\n")
         self.update_cmds = self.check_cmds(["x-live-update","update-manager","mintupdate","muon-updater","discover","gnome-software","aptitude"]).split("\n")
 
         # Befehlsdefinition
@@ -101,6 +101,18 @@ class SystemTrayApp:
             self.webai_action = QAction("WebAI Chatbot")
             self.webai_action.triggered.connect(lambda: subprocess.Popen("x-live-webai"))
             self.webai_action.setIcon(QIcon('/usr/share/pixmaps/webai'))
+            self.menu.addAction(self.webai_action)
+
+        if self.check_cmd("x-live-flatman") != "":
+            self.webai_action = QAction("Flatpak Manager")
+            self.webai_action.triggered.connect(lambda: subprocess.Popen("x-live-flatman"))
+            self.webai_action.setIcon(QIcon('/usr/share/pixmaps/x-live-flatman'))
+            self.menu.addAction(self.webai_action)
+
+        if self.check_cmd("x-live-appman") != "":
+            self.webai_action = QAction("App Manager")
+            self.webai_action.triggered.connect(lambda: subprocess.Popen("x-live-appman"))
+            self.webai_action.setIcon(QIcon('/usr/share/pixmaps/x-live-appman'))
             self.menu.addAction(self.webai_action)
 
         if self.check_cmd("x-live-cp") != "":
