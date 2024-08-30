@@ -167,8 +167,8 @@ class GDebiClone(QMainWindow):
                 lines = file.read().decode('utf-8').splitlines()
 
             if lines:
-                repo = lines
-                print(repo)
+                repos = lines
+                print(repos)
         except Exception as e:
             fehler = str(e).split(":")[-1]
             print(f"Fehler: {fehler}")
