@@ -157,6 +157,7 @@ class GDebiClone(QMainWindow):
         author = "verendert"
         repos = ["x-live-cp","x-live-tray","x-mint-settings","x-live-hardwareinfo", "x-live-easyeggs", "x-live-radio", "x-live-webai"]
         update_list = []
+        aktuell_text_list = ""
         update_text_list = ""
         url_list = {}
 
@@ -184,7 +185,7 @@ class GDebiClone(QMainWindow):
                     #print(test)
 
                 if test['update'] == "a":
-                    print(f"\n{package} ist installiert und aktuell! Version {test['installed']}")
+                    aktuell_text_list = aktuell_text_list + (f"\n{package} ist installiert und aktuell! Version {test['installed']}")
             except Exception as e:
                 fehler = str(e).split(":")[-1]
                 print(f"Fehler: {fehler}")
@@ -192,7 +193,7 @@ class GDebiClone(QMainWindow):
         if update_list != []:
             print(update_list)
             self.install_button.setEnabled(True)
-            self.info_label.setText(update_text_list)
+            self.info_label.setText(f"aktuelle Apps:{aktuell_text_list}\n\nApps die aktuallsiert werden müssen:{update_text_list}")
         return url_list,update_list
 
     # downloader
