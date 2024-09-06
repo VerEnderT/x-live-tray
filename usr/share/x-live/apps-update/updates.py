@@ -27,8 +27,8 @@ class GDebiClone(QMainWindow):
         self.layout = QVBoxLayout()
 
         # Label to display selected file
-        self.label = QLabel("Verfügbare updates: ", self)
-        self.layout.addWidget(self.label)
+        #self.label = QLabel("Verfügbare updates: ", self)
+        #self.layout.addWidget(self.label)
 
 
         # Label to display package information
@@ -194,6 +194,8 @@ class GDebiClone(QMainWindow):
             print(update_list)
             self.install_button.setEnabled(True)
             self.info_label.setText(f"aktuelle Apps:{aktuell_text_list}\n\nApps die aktuallsiert werden müssen:{update_text_list}")
+        else:            
+            self.info_label.setText(f"aktuelle Apps:{aktuell_text_list}\n\nApps die aktuallsiert werden müssen:\nkeine Updates verfügbar")
         return url_list,update_list
 
     # downloader
